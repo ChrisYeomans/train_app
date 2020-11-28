@@ -32,11 +32,14 @@ export class StationInfo extends React.Component {
             )
             .then(response => response.text())
             .then(str => parseString(str, function (err, result) {
-                console.log(`http://api.irishrail.ie/realtime/realtime.asmx/getStationDataByCodeXML?StationCode=${this.state.stationCode}`);
-                this.setState({
-                    stationInfo: JSON.stringify(result.ArrayOfObjStationData.objStationData),
-                    isLoaded: true
-                });
+                try {
+                    this.setState({
+                        stationInfo: JSON.stringify(result.ArrayOfObjStationData.objStationData),
+                        isLoaded: true
+                    });
+                } catch (error) {
+                    console.log(error.message);
+                }
         }.bind(this)));
         console.log(this.state);
     }

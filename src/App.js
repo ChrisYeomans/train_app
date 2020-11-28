@@ -1,11 +1,16 @@
+/*jshint esversion: 8 */
+
 import './App.css';
-import { StationInfo } from './stations.js';
+import { StationInfo } from './StationInfo.js';
+import { StationList } from './StationList.js';
+const React = require('react');
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <StationInfo stationName="Dublin Connolly" />
+          <StationList />
       </header>
     </div>
   );
