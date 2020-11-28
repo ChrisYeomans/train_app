@@ -1,10 +1,11 @@
 import './App.css';
+import { StationInfo } from './stations.js';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Hello World</h1>
+        <StationInfo stationName="Dublin Connolly" />
       </header>
     </div>
   );
