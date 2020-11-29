@@ -1,5 +1,3 @@
-/*jshint esversion: 8 */
-
 import { StationInfo } from './StationInfo.js';
 const React = require('react');
 const fetch = require("node-fetch");
@@ -12,7 +10,8 @@ export class StationList extends React.Component {
             stationList: null,
             fullList: null,
             isLoaded: false,
-            selectedStation: null
+            selectedStation: null,
+            selectedTrain: null
         };
         this.filterList = this.filterList.bind(this);
         this.selectStation = this.selectStation.bind(this);

@@ -1,7 +1,4 @@
-/*jshint esversion: 8 */
-
 import './App.css';
-import { StationInfo } from './StationInfo.js';
 import { StationList } from './StationList.js';
 const React = require('react');
 

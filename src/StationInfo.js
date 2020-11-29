@@ -1,5 +1,4 @@
-/*jshint esversion: 8 */
-
+import { TrainInfo } from './TrainInfo.js';
 const React = require('react');
 const fetch = require("node-fetch");
 const parseString = require('xml2js').parseString;
@@ -11,7 +10,8 @@ export class StationInfo extends React.Component {
             stationName: props.stationName,
             stationCode: "",
             stationInfo: {},
-            isLoaded: false
+            isLoaded: false,
+            selectedTrain: null
         };
     }
     async componentDidMount() {
@@ -41,12 +41,20 @@ export class StationInfo extends React.Component {
                     console.log(error.message);
                 }
         }.bind(this)));
-        console.log(this.state);
     }
+
+    selectTrain(t) {
+        this.setState(({ 
+            selectedTrain: t[0].trim().toLowerCase()
+        }));
+    }
+
     render() {
-        const { isLoaded, stationInfo } = this.state;
+        const { isLoaded, stationInfo, selectedTrain } = this.state;
         if (!isLoaded) {
             return <div>Loading...</div>;
+        } else if (selectedTrain != null) {
+            return <TrainInfo trainCode={ selectedTrain } />;
         } else {
             return (
                 <div class="table-responsive-md">
@@ -81,7 +89,7 @@ export class StationInfo extends React.Component {
                                 {JSON.parse(stationInfo).map((train) => (
                                     <tr class="text-center">
                                         <td>{ train.Servertime }</td>
-                                        <td>{ train.Traincode }</td>
+                                        <td><button onClick={ () => this.selectTrain(train.Traincode) }>{ train.Traincode }</button></td>
                                         <td>{ train.Stationfullname }</td>
                                         <td>{ train.Stationcode }</td>
                                         <td>{ train.Querytime }</td>
