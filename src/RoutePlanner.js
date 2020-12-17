@@ -168,7 +168,7 @@ export class RoutePlanner extends React.Component {
                         <option>{ s }</option>
                     )) }
                 </select>
-                <button onClick={(s) => this.selectStations(s)}>Submit</button>
+                <button onClick={(s) => this.selectStations(s)} class="button1">Submit</button>
             </div>
             );
         }

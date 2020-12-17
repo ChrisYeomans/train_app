@@ -56,3 +56,18 @@ body {
     width: 250px;
     height: 100px;
   }
+
+  .button1 
+  {
+  
+      background-color: #678aad;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px;
+  margin-left: 20px;
+      box-shadow: 6px 6px;
+  }
