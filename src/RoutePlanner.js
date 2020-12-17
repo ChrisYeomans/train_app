@@ -9,8 +9,18 @@ export class RoutePlanner extends React.Component {
             currentTrains: {},
             hasCurrentTrains: false,
             trainMap: new Map(),
-            trainMapLoaded: false
+            trainMapLoaded: false,
+            choiceMade: false,
+            stationList: [],
+            fullList: [],
+            isLoaded: false,
+            s1: null,
+            s2: null
         };
+
+        this.handleChangeS1 = this.handleChangeS1.bind(this);
+        this.handleChangeS2 = this.handleChangeS2.bind(this);
+        this.selectStations = this.selectStations.bind(this);
     }
     async componentDidMount() {
         await fetch(
@@ -49,6 +59,20 @@ export class RoutePlanner extends React.Component {
                     }
                 })
         ));
+        await fetch("http://api.irishrail.ie/realtime/realtime.asmx/getAllStationsXML")
+        .then(response => response.text())
+        .then(str => parseString(str, function(err, result) {
+            let objMap = result.ArrayOfObjStation.objStation;
+            let keyMap = new Map();
+            objMap.forEach(s => {
+                keyMap[s.StationDesc] = s.StationCode;
+            });
+            this.setState({
+                stationList: Object.keys(keyMap),
+                fullList: Object.keys(keyMap),
+                isLoaded: true
+            });
+        }.bind(this)));
     }
 
     getStationList(v) {
@@ -94,12 +118,27 @@ export class RoutePlanner extends React.Component {
         return null;
     }
 
+    selectStations(e) {
+        console.log("RUNNING");
+        this.setState({
+            choiceMade: true
+        })
+    }
+
+    handleChangeS1(e){
+        this.setState({s1:e.target.value});
+    }
+    handleChangeS2(e){
+        this.setState({s2:e.target.value});
+    }
+      
+
     render() {
-        const { trainMapLoaded, trainMap } = this.state;
+        const { trainMapLoaded, choiceMade, isLoaded, stationList, s1, s2 } = this.state;
         if (!trainMapLoaded) {
             return <div>Loading...</div>;
-        } else {
-            let p = this.getRoute("Arklow", 1, "Maynooth", 1, []);
+        } else if (choiceMade) {
+            let p = this.getRoute(s1, 1, s2, 1, []);
             if (p != null) {
                 return (
                     <div class="table-responsive-md">
@@ -112,6 +151,26 @@ export class RoutePlanner extends React.Component {
             } else {
                 return <div>Loading...</div>; 
             }
+        } else if (!isLoaded) {
+            return <div>Loading...</div>;
+        } else {
+            return (
+            <div>
+                <label for="stations">Choose a station:</label>
+                <select name="stations" id="s1" value={this.state.s1} onChange={this.handleChangeS1} >
+                    { stationList.map((s) => (
+                        <option value={ s }>{ s }</option>
+                    )) }
+                </select>
+                <br /><br />
+                <select name="stations" id="s2" value={this.state.s2} onChange={this.handleChangeS2}>
+                    { stationList.map((s) => (
+                        <option>{ s }</option>
+                    )) }
+                </select>
+                <button onClick={(s) => this.selectStations(s)}>Submit</button>
+            </div>
+            );
         }
     }
 }
