@@ -7,4 +7,4 @@ node install
 yarn install
 yarn start
 ```
-Also you will need to install (this)[https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc] chrome extension and turn it on. 
+Also you will need to install [this](https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc) chrome extension and turn it on. 
