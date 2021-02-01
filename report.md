@@ -1,0 +1,5 @@
+## How did you implement functionality?
+
+The functionality was split into 3 main parts, the Route planner, the live station data and the live train data. There were 4 main components used for this, RoutePlanner, StationInfo, StationList and TrainInfo.
+To start a list of all the stations was displayed using the StationList component. When a station was clicked on the a state variable was updated in the StationInfo component which then rendered the StationInfo component with the desired station. The same idea was used in the StationInfo component to render the TrainInfo component when a train was selected.
+Below the StationList in a different div was the RoutePlanner. This initiclly consisted of 2 dropdown lists to select the station and a submit button the find the desired route. The route was found using a breadth first search algorithm so as to find a short route rather than a long one.
